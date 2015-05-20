@@ -8,11 +8,19 @@
 
 import UIKit
 
+protocol RFProgressViewDelegate {
+    func progressViewStartingValue(view: RFProgressView)-> CGFloat
+    func progressViewTotalValue(view: RFProgressView)-> CGFloat
+}
+
 @IBDesignable class RFProgressView: UIView {
 
-    @IBInspectable var percentComplete : CGFloat = 0.85
+
     @IBInspectable var circleWidth : CGFloat = 1.0
     @IBInspectable var circleColor : UIColor = UIColor.blackColor()
+    @IBInspectable var continuous : Bool = false
+    @IBInspectable var currentValue : CGFloat = 1.0
+    @IBInspectable var totalValue : CGFloat = 1.0
 
     @IBInspectable var hidesInsetCircle: Bool = false
     @IBInspectable var insetCircleColor: UIColor = UIColor.blackColor()
@@ -25,8 +33,11 @@ import UIKit
 
     var mainLabel : UILabel!
 
-
+    var delegate : RFProgressViewDelegate!
+    private var filling : Bool!
     private var progressLayer : CAShapeLayer!
+    private var percentComplete : CGFloat!
+    private var isIB : Bool!
 
     override func drawRect(rect: CGRect) {
         super.drawRect(rect)
@@ -40,25 +51,30 @@ import UIKit
 
     override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
+        self.isIB = true;
         self.drawTitleLabel()
     }
 
-    func changeProgressByNominator(numerator: CGFloat, byDenominator denominator: CGFloat, andWithAnimationDuration duration: CGFloat) {
+    func changeProgressToValue(value: CGFloat, andWithAnimationDuration duration: CGFloat) {
         let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
         basicAnimation.duration = Double(duration)
-        basicAnimation.toValue = NSNumber(double: Double(numerator/denominator))
-        basicAnimation.fromValue = NSNumber(double: Double(self.percentComplete))
+        let startingPercentage = self.percentComplete
+        self.percentComplete = value/self.totalValue
+        basicAnimation.toValue = NSNumber(double: Double(self.percentComplete))
+        basicAnimation.fromValue = NSNumber(double: Double(startingPercentage))
         basicAnimation.fillMode = kCAFillModeBoth
         basicAnimation.removedOnCompletion = false
         progressLayer.addAnimation(basicAnimation, forKey: nil)
-        self.percentComplete = numerator/denominator
-        self.mainLabel.text = "\(numerator)"
+        self.mainLabel.text = "\(value)"
     }
 
     //Draws in the circles according to what is provided in IB
     private func drawCircles() {
         let startingAngle = CGFloat(M_PI * 1.5)
         let endAngle = startingAngle + CGFloat(CGFloat(M_PI * 2))
+
+        self.currentValue = isIB == true ? self.currentValue : self.delegate.progressViewStartingValue(self)
+        self.totalValue = isIB == true ? self.totalValue : self.delegate.progressViewTotalValue(self)
 
         let circlePath = UIBezierPath()
         let center = CGPointMake(CGRectGetWidth(self.frame)/2, CGRectGetHeight(self.frame)/2)
@@ -69,25 +85,33 @@ import UIKit
             clockwise: true)
 
         self.progressLayer = CAShapeLayer()
-        self.progressLayer.path = circlePath.CGPath
-        self.progressLayer.strokeColor = self.circleColor.CGColor
-        self.progressLayer.fillColor = UIColor.clearColor().CGColor
-        self.progressLayer.lineWidth = self.circleWidth
-        self.progressLayer.strokeStart = 0.0
-        self.progressLayer.strokeEnd = self.percentComplete > 1.0 ? self.percentComplete/100 : self.percentComplete
-        self.layer.addSublayer(progressLayer)
+
 
         if hidesInsetCircle == false {
-            let insetCirclePath = UIBezierPath()
-            insetCirclePath.addArcWithCenter(center,
-                radius: CGRectGetWidth(self.frame) / 2 - self.circleWidth / 2 - self.insetCircleWidth / 2,
-                startAngle: startingAngle ,
-                endAngle: endAngle,
-                clockwise: true)
-            insetCirclePath.lineWidth = self.insetCircleWidth
-            self.insetCircleColor.setStroke()
-            insetCirclePath.stroke()
+//            let insetCirclePath = UIBezierPath()
+//            insetCirclePath.addArcWithCenter(center,
+//                radius: CGRectGetWidth(self.frame) / 2 - self.circleWidth / 2 - self.insetCircleWidth / 2,
+//                startAngle: startingAngle ,
+//                endAngle: endAngle,
+//                clockwise: true)
+            let insetLayer = CAShapeLayer()
+            self.addLayer(insetLayer, toPath: circlePath, withStrokeColor: self.insetCircleColor, lineWidth: self.insetCircleWidth, complete: self.totalValue)
+
         }
+
+//        let complete = isIB ? self.currentValue : 
+
+        self.addLayer(self.progressLayer, toPath: circlePath, withStrokeColor: self.circleColor, lineWidth: self.circleWidth, complete: self.currentValue)
+    }
+
+    private func addLayer(layer: CAShapeLayer, toPath path: UIBezierPath, withStrokeColor color: UIColor, lineWidth: CGFloat, complete: CGFloat) {
+        layer.path = path.CGPath
+        layer.strokeColor = self.circleColor.CGColor
+        layer.fillColor = UIColor.clearColor().CGColor
+        layer.lineWidth = self.circleWidth
+        layer.strokeStart = 0.0
+        layer.strokeEnd = complete/self.totalValue
+        self.layer.addSublayer(progressLayer)
     }
 
     //Adds the MainLabel to the View

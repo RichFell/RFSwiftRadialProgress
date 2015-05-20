@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		9BA424E61B0A672800CB4E92 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA424E51B0A672800CB4E92 /* AppDelegate.swift */; };
-		9BA424E91B0A672800CB4E92 /* RFSwiftRadialProgress.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9BA424E71B0A672800CB4E92 /* RFSwiftRadialProgress.xcdatamodeld */; };
 		9BA424EB1B0A672800CB4E92 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA424EA1B0A672800CB4E92 /* ViewController.swift */; };
 		9BA424EE1B0A672800CB4E92 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BA424EC1B0A672800CB4E92 /* Main.storyboard */; };
 		9BA424F01B0A672800CB4E92 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BA424EF1B0A672800CB4E92 /* Images.xcassets */; };
@@ -31,7 +30,6 @@
 		9BA424E01B0A672800CB4E92 /* RFSwiftRadialProgress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RFSwiftRadialProgress.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BA424E41B0A672800CB4E92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9BA424E51B0A672800CB4E92 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9BA424E81B0A672800CB4E92 /* RFSwiftRadialProgress.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RFSwiftRadialProgress.xcdatamodel; sourceTree = "<group>"; };
 		9BA424EA1B0A672800CB4E92 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9BA424ED1B0A672800CB4E92 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9BA424EF1B0A672800CB4E92 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -87,7 +85,6 @@
 				9BA424EC1B0A672800CB4E92 /* Main.storyboard */,
 				9BA424EF1B0A672800CB4E92 /* Images.xcassets */,
 				9BA424F11B0A672800CB4E92 /* LaunchScreen.xib */,
-				9BA424E71B0A672800CB4E92 /* RFSwiftRadialProgress.xcdatamodeld */,
 				9BA424E31B0A672800CB4E92 /* Supporting Files */,
 			);
 			path = RFSwiftRadialProgress;
@@ -220,7 +217,6 @@
 			files = (
 				9BA424EB1B0A672800CB4E92 /* ViewController.swift in Sources */,
 				9BA424E61B0A672800CB4E92 /* AppDelegate.swift in Sources */,
-				9BA424E91B0A672800CB4E92 /* RFSwiftRadialProgress.xcdatamodeld in Sources */,
 				9BA425091B0A683600CB4E92 /* RFProgressView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -431,19 +427,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		9BA424E71B0A672800CB4E92 /* RFSwiftRadialProgress.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				9BA424E81B0A672800CB4E92 /* RFSwiftRadialProgress.xcdatamodel */,
-			);
-			currentVersion = 9BA424E81B0A672800CB4E92 /* RFSwiftRadialProgress.xcdatamodel */;
-			path = RFSwiftRadialProgress.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 9BA424D81B0A672800CB4E92 /* Project object */;
 }

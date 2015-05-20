@@ -22,7 +22,13 @@ class ViewController: UIViewController {
     }
 
     func draw() {
-        demoProgress.changeProgressByNominator(CGFloat(++count), byDenominator: 10.0, andWithAnimationDuration: 0.95)
+
+        if count <= 10 {
+            demoProgress.changeProgressByNominator(CGFloat(count++), byDenominator: 10.0, andWithAnimationDuration: 0.5)
+        }
+        else {
+            demoProgress.changeProgressByNominator(0, byDenominator: 10.0, andWithAnimationDuration: 0.0)
+            count = 0
+        }
     }
 }
-
